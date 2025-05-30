@@ -1,6 +1,11 @@
 package main
 
 func main() {
-	cards := newDeck()
-	cards.saveToFile("my_cards")
+	cards, err := newDeckFromFile("my_cards")
+	if err != nil {
+		cards = newDeck()
+	}
+	cards.print()
+	// cards := newDeck()
+	// cards.saveToFile("my_cards")
 }

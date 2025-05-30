@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 	"os"
 )
@@ -43,7 +44,8 @@ func (d deck) saveToFile(filename string) error {
 func newDeckFromFile(filename string) (deck, error) {
 	bs, err := os.ReadFile(filename)
 	if err != nil {
-		return nil, err
+		fmt.Println("Error reading file:", err)
+		os.Exit(1)
 	}
 	s := strings.Split(string(bs), ", ")
 	return deck(s), nil
