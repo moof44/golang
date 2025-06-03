@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 	"os"
+	"math/rand"
+	"time"
 )
 
 // creaate a new type of 'deck'
@@ -45,8 +47,19 @@ func newDeckFromFile(filename string) (deck, error) {
 	bs, err := os.ReadFile(filename)
 	if err != nil {
 		fmt.Println("Error reading file:", err)
-		os.Exit(1)
+		return nil, err
+		// os.Exit(1)
 	}
 	s := strings.Split(string(bs), ", ")
 	return deck(s), nil
+}
+
+func (d deck) shuffle() {
+	source := rand.NewSource(time.Now().UnixNano())
+	r := rand.New(source)
+
+	for i := range d {
+		newPosition := r.Intn(len(d) - 1)
+		d[i], d[newPosition] = d[newPosition], d[i]
+	}
 }
